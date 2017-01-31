@@ -17,16 +17,19 @@ namespace lab2Application.Controllers
             for(int i=0; i<files.Length; i++)
             {
                 int last_slash = files[i].Split('\\').Length - 1;
-                files[i] = files[i].Split('\\')[last_slash];
+                files[i] = files[i].Split('\\')[last_slash].Split('.')[0];
             }
             ViewBag.files = files;
             return View();
         }
         public ActionResult Display(string id)
         {
-            string path = Server.MapPath("~/TextFiles/"+id);
+            string tmp = id;
+            string path = Server.MapPath("~/TextFiles/" + id + ".txt");
             StreamReader reader = new StreamReader(path);
-            ViewBag.content = reader.ReadLine();
+            string line = reader.ReadToEnd();
+
+            ViewBag.content = line;
 
             return View();
         }
